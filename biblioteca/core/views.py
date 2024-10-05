@@ -13,7 +13,7 @@ class LivroList(generics.ListCreateAPIView):
     serializer_class = LivroSerializer
     name = "livro-list"
     filterset_class = LivroFilter
-    search_fields = ("^nome",)
+    search_fields = ("^titulo",)
     ordering_fields = ('titulo', 'autor', 'categoria', 'publicado_em')
 
 
@@ -41,6 +41,8 @@ class AutorList(generics.ListCreateAPIView):
     queryset = Autor.objects.all()
     serializer_class = AutorSerializer
     name = "autor-list"
+    search_fields = ("^nome",)
+    ordering_fields = ('nome',)
 
 
 class AutorDetail(generics.RetrieveUpdateDestroyAPIView):
