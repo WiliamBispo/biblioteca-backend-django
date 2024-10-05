@@ -14,7 +14,7 @@ class LivroList(generics.ListCreateAPIView):
     name = "livro-list"
     filterset_class = LivroFilter
     search_fields = ("^nome",)
-    ordering_fields = ('nome', 'titulo', 'autor', 'categoria', 'publicado_em')
+    ordering_fields = ('titulo', 'autor', 'categoria', 'publicado_em')
 
 
 class LivroDetail(generics.RetrieveUpdateDestroyAPIView):
