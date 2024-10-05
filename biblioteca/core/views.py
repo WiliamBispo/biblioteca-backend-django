@@ -5,12 +5,16 @@ from .models import Autor
 from .serializers import LivroSerializer
 from .serializers import CategoriaSerializer
 from .serializers import AutorSerializer
+from core.filters import LivroFilter
 
 
 class LivroList(generics.ListCreateAPIView):
     queryset = Livro.objects.all()
     serializer_class = LivroSerializer
     name = "livro-list"
+    filterset_class = LivroFilter
+    search_fields = ("^nome",)
+    ordering_fields = ('nome', 'titulo', 'autor', 'categoria', 'publicado_em')
 
 
 class LivroDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -23,6 +27,8 @@ class CategoriaList(generics.ListCreateAPIView):
     queryset = Categoria.objects.all()
     serializer_class = CategoriaSerializer
     name = "categoria-list"
+    search_fields = ("^nome",)
+    ordering_fields = ('nome',)
 
 
 class CategoriaDetail(generics.RetrieveUpdateDestroyAPIView):
