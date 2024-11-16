@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Categoria, Autor, Livro
+from .models import Categoria, Autor, Livro, Colecao
 
 
 class CategoriaSerializer(serializers.HyperlinkedModelSerializer):
@@ -31,3 +31,16 @@ class LivroSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Livro
         fields = ('url', 'id', 'titulo', 'autor', 'categoria', 'publicado_em')
+
+
+class ColecaoSerializer(serializers.HyperlinkedModelSerializer):
+    livros = serializers.SlugRelatedField(
+        many=True,
+        queryset=Livro.objects.all(),
+        slug_field='titulo'
+    )
+    colecionador = serializers.ReadOnlyField(source='colecionador.username')
+
+    class Meta:
+        model = Colecao
+        fields = ('url', 'id', 'nome', 'descricao', 'colecionador', 'livros')

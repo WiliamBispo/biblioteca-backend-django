@@ -17,4 +17,8 @@ urlpatterns = [
     path('autor/<int:pk>/', views.AutorDetail.as_view(),
          name=views.AutorDetail.name),
 
+    path('colecoes/', views.ColecaoList.as_view(), name=views.ColecaoList.name),
+    path('colecoes/<int:pk>/', views.ColecaoDetail.as_view(),
+         name=views.ColecaoDetail.name),
+
 ]
