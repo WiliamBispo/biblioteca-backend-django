@@ -67,7 +67,9 @@ class ColecaoTests(APITestCase):
             livros=[self.livro1.titulo, self.livro2.titulo]
         )
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
-        self.assertEqual("user01", Colecao.objects.get().colecionador.username)
+        colecao_id = response.data["id"]
+        colecao = Colecao.objects.get(id=colecao_id)
+        self.assertEqual(self.user, colecao.colecionador)
 
     # teste do colecionador que pode editar a sua coleção
     def test_put_colecao(self):
