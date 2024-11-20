@@ -10,7 +10,8 @@ from .serializers import ColecaoSerializer
 from core.filters import LivroFilter
 from rest_framework import permissions
 from core import custom_permissions
-from rest_framework.authentication import TokenAuthentication
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 
 class LivroList(generics.ListCreateAPIView):
@@ -60,11 +61,8 @@ class ColecaoList(generics.ListCreateAPIView):
     queryset = Colecao.objects.all()
     serializer_class = ColecaoSerializer
     name = "colecao-list"
-    permission_classes = (
-        permissions.IsAuthenticatedOrReadOnly,
-        custom_permissions.IsCurrentUserOwnerOrReadOnly,
-    )
-    authentication_classes = (TokenAuthentication,)
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(colecionador=self.request.user)
@@ -74,8 +72,8 @@ class ColecaoDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Colecao.objects.all()
     serializer_class = ColecaoSerializer
     name = "colecao-detail"
-    permission_classes = (
-        permissions.IsAuthenticatedOrReadOnly,
-        custom_permissions.IsCurrentUserOwnerOrReadOnly,
-    )
-    authentication_classes = (TokenAuthentication,)
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [
+        permissions.IsAuthenticated,
+        custom_permissions.IsCurrentUserOwnerOrReadOnly
+    ]

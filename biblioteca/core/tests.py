@@ -71,7 +71,7 @@ class ColecaoTests(APITestCase):
         colecao = Colecao.objects.get(id=colecao_id)
         self.assertEqual(self.user, colecao.colecionador)
 
-    # teste do colecionador que pode editar a sua coleção
+    # Teste do colecionador que pode editar a sua coleção
     def test_put_colecao(self):
         response = self.post_colecao(
             nome="Coleção Teste",
@@ -92,7 +92,7 @@ class ColecaoTests(APITestCase):
         self.assertEqual("Coleção Atualizada",
                          Colecao.objects.get(id=colecao_id).nome)
 
-    # teste do colecionador que pode excluir a sua coleção
+    # Teste do colecionador que pode excluir a sua coleção
     def test_delete_colecao(self):
         response = self.post_colecao(
             nome="Coleção Teste",
@@ -108,7 +108,7 @@ class ColecaoTests(APITestCase):
                          delete_response.status_code)
         self.assertFalse(Colecao.objects.filter(id=colecao_id).exists())
 
-    # teste do colecionador que NÃO pode editar ou excluir a coleção de outro colecionador
+    # Teste do colecionador que NÃO pode editar ou excluir a coleção de outro colecionador
     def test_put_and_delete_non_colecionador(self):
         response = self.post_colecao(
             nome="Coleção Teste",
@@ -133,7 +133,7 @@ class ColecaoTests(APITestCase):
         self.assertEqual(status.HTTP_403_FORBIDDEN,
                          delete_response.status_code)
 
-    # teste de usuarios não autenticados que não podem criar coleções
+    # Teste de usuarios não autenticados que não podem criar coleções
     def test_post_colecao_without_token(self):
         self.client.credentials()
         response = self.post_colecao(
@@ -143,7 +143,7 @@ class ColecaoTests(APITestCase):
         )
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
-    # teste de usuarios não autenticados que não podem editar coleções
+    # Teste de usuarios não autenticados que não podem editar coleções
     def test_put_colecao_without_token(self):
         response = self.post_colecao(
             nome="Coleção Teste",
@@ -165,7 +165,7 @@ class ColecaoTests(APITestCase):
         self.assertEqual(status.HTTP_401_UNAUTHORIZED,
                          put_response.status_code)
 
-    # teste de usuarios não autenticados que não podem excluir coleções
+    # Teste de usuarios não autenticados que não podem excluir coleções
     def test_delete_colecao_without_token(self):
         response = self.post_colecao(
             nome="Coleção Teste",
@@ -181,3 +181,41 @@ class ColecaoTests(APITestCase):
         delete_response = self.client.delete(url)
         self.assertEqual(status.HTTP_401_UNAUTHORIZED,
                          delete_response.status_code)
+
+    # Teste de listagem de coleções para usuários autenticados
+    def test_get_colecao(self):
+        self.post_colecao(
+            nome="Coleção 1",
+            descricao="Primeira coleção de teste.",
+            livros=[self.livro1.titulo]
+        )
+        self.post_colecao(
+            nome="Coleção 2",
+            descricao="Segunda coleção de teste.",
+            livros=[self.livro2.titulo]
+        )
+        url = reverse("colecao-list")
+        get_response = self.client.get(url)
+
+        self.assertEqual(status.HTTP_200_OK, get_response.status_code)
+        self.assertEqual(2, get_response.data["count"])
+        self.assertEqual("Coleção 1", get_response.data["results"][0]["nome"])
+        self.assertEqual("Coleção 2", get_response.data["results"][1]["nome"])
+
+    # Teste de listagem de coleções para usuários NÃO autenticados
+    def test_get_colecao_without_authenticated(self):
+        self.post_colecao(
+            nome="Coleção 1",
+            descricao="Primeira coleção de teste.",
+            livros=[self.livro1.titulo]
+        )
+        self.post_colecao(
+            nome="Coleção 2",
+            descricao="Segunda coleção de teste.",
+            livros=[self.livro2.titulo]
+        )
+        self.client.credentials()
+        url = reverse("colecao-list")
+        get_response = self.client.get(url)
+        self.assertEqual(status.HTTP_401_UNAUTHORIZED,
+                         get_response.status_code)

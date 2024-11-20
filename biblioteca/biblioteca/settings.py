@@ -142,7 +142,7 @@ REST_FRAMEWORK = {
         "rest_framework.filters.SearchFilter",
     ),
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
         "rest_framework.authentication.SessionAuthentication",
     ),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
@@ -152,7 +152,7 @@ SPECTACULAR_SETTINGS = {
     "TITLE": "RESTIC Back-end API",
     "DESCRIPTION": "Your project description",
     "VERSION": "1.0.0",
-    "SERVE INCLUDE SCHEMA": False,
+    "SERVE_INCLUDE_SCHEMA": False,
     # OTHER SETTINGS
     "AUTHENTICATION_WHITELIST": [
         # Lista de autenticações suportadas na documentação
