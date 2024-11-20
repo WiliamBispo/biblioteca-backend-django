@@ -70,7 +70,7 @@ class ColecaoTests(APITestCase):
         self.assertEqual("user01", Colecao.objects.get().colecionador.username)
 
     # teste do colecionador que pode editar a sua coleção
-    def test_colecionador_can_edit_collection(self):
+    def test_put_colecao(self):
         response = self.post_colecao(
             nome="Coleção Teste",
             descricao="Livros de Teste.",
@@ -91,7 +91,7 @@ class ColecaoTests(APITestCase):
                          Colecao.objects.get(id=colecao_id).nome)
 
     # teste do colecionador que pode excluir a sua coleção
-    def test_colecionador_can_delete_collection(self):
+    def test_delete_colecao(self):
         response = self.post_colecao(
             nome="Coleção Teste",
             descricao="Livros de Teste.",
@@ -107,7 +107,7 @@ class ColecaoTests(APITestCase):
         self.assertFalse(Colecao.objects.filter(id=colecao_id).exists())
 
     # teste do colecionador que NÃO pode editar ou excluir a coleção de outro colecionador
-    def test_non_colecionador_cannot_edit_or_delete_collection(self):
+    def test_put_and_delete_non_colecionador(self):
         response = self.post_colecao(
             nome="Coleção Teste",
             descricao="Livros de Teste.",
