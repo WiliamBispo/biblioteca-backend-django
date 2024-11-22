@@ -3,21 +3,15 @@ from .models import Categoria, Autor, Livro, Colecao
 
 
 class CategoriaSerializer(serializers.HyperlinkedModelSerializer):
-    livros = serializers.HyperlinkedRelatedField(
-        many=True, read_only=True, view_name='livro-detail')
-
     class Meta:
         model = Categoria
-        fields = ('url', 'id', 'nome', 'livros')
+        fields = ('url', 'id', 'nome')
 
 
 class AutorSerializer(serializers.HyperlinkedModelSerializer):
-    livros = serializers.HyperlinkedRelatedField(
-        many=True, read_only=True, view_name='livro-detail')
-
     class Meta:
         model = Autor
-        fields = ('url', 'id', 'nome', 'livros')
+        fields = ('url', 'id', 'nome')
 
 
 class LivroSerializer(serializers.HyperlinkedModelSerializer):

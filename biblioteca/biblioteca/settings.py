@@ -42,21 +42,28 @@ INSTALLED_APPS = [
     # Habilita Core application
     'core.apps.CoreConfig',
     # Django Filters
-    "django_filters",
+    'django_filters',
     # Token authentication
-    "rest_framework.authtoken",
+    'rest_framework.authtoken',
     # OpenAPI
-    "drf_spectacular",
+    'drf_spectacular',
+    # Cross-Origin Resource Sharing (CORS)
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://192.168.1.100",
 ]
 
 ROOT_URLCONF = 'biblioteca.urls'

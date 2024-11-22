@@ -1,12 +1,6 @@
+from .models import Livro, Autor, Categoria, Colecao
+from .serializers import LivroSerializer, AutorSerializer, CategoriaSerializer, ColecaoSerializer
 from rest_framework import generics
-from .models import Livro
-from .models import Categoria
-from .models import Autor
-from .models import Colecao
-from .serializers import LivroSerializer
-from .serializers import CategoriaSerializer
-from .serializers import AutorSerializer
-from .serializers import ColecaoSerializer
 from core.filters import LivroFilter
 from rest_framework import permissions
 from core import custom_permissions
@@ -29,20 +23,6 @@ class LivroDetail(generics.RetrieveUpdateDestroyAPIView):
     name = "livro-detail"
 
 
-class CategoriaList(generics.ListCreateAPIView):
-    queryset = Categoria.objects.all()
-    serializer_class = CategoriaSerializer
-    name = "categoria-list"
-    search_fields = ("^nome",)
-    ordering_fields = ('nome',)
-
-
-class CategoriaDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Categoria.objects.all()
-    serializer_class = CategoriaSerializer
-    name = "categoria-detail"
-
-
 class AutorList(generics.ListCreateAPIView):
     queryset = Autor.objects.all()
     serializer_class = AutorSerializer
@@ -55,6 +35,20 @@ class AutorDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Autor.objects.all()
     serializer_class = AutorSerializer
     name = "autor-detail"
+
+
+class CategoriaList(generics.ListCreateAPIView):
+    queryset = Categoria.objects.all()
+    serializer_class = CategoriaSerializer
+    name = "categoria-list"
+    search_fields = ("^nome",)
+    ordering_fields = ('nome',)
+
+
+class CategoriaDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Categoria.objects.all()
+    serializer_class = CategoriaSerializer
+    name = "categoria-detail"
 
 
 class ColecaoList(generics.ListCreateAPIView):
