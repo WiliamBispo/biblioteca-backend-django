@@ -32,7 +32,6 @@ Este é um sistema de gerenciamento de biblioteca desenvolvido como parte da Tri
 
 ```bash
 git clone https://github.com/WiliamBispo/biblioteca-backend-django.git
-cd biblioteca
 ```
 
 ### Passo 2: Criar um ambiente virtual
@@ -58,7 +57,6 @@ python -m venv venv
 ### Passo 4: Instalar as dependências
 
 ```bash
-cd biblioteca
 pip install -r requirements.txt
 ```
 
@@ -67,6 +65,7 @@ pip install -r requirements.txt
 Após a instalação das dependências, você precisa aplicar as migrações para configurar o banco de dados:
 
 ```bash
+cd biblioteca
 python manage.py migrate
 ```
 
